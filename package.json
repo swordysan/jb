@@ -5,7 +5,8 @@
   "main": "jimbot.js",
   "dependencies": {
     "discord.js": "^8.1.0",
-    "node-json-db": "^0.7.3"
+    "node-json-db": "^0.7.3",
+	"jsdom": "*"
   },
   "devDependencies": {},
   "scripts": {
