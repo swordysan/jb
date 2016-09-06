@@ -54,7 +54,9 @@ jimbot.on("message", function(message) {
 \n\
 `!info` - Basic bot info.\n\
 `!status` - Uptime and status.\n\
-`!roadmap` - Development roadmap.");
+`!roadmap` - Development roadmap.\n\
+`!changelog` - Update history.\n\
+");
 		commandcount--;
     };
 	
@@ -63,17 +65,22 @@ jimbot.on("message", function(message) {
 		Performance and Fansign commands for more advanced filtering.\n\
 		User based cooldown to prevent excessive spamming.\n\
 		~~24 hour uptime when I can afford it.~~ - Complete\n\
-		Larger image pool.");
+		Larger image pool. - In Progress");
 		commandcount--;
     };
 
 	if(message.content.startsWith(prefix + "uptime")){
-		jimbot.sendMessage(message, "Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty jimmers. Current pool size 609 images in 28 albums.");
+		jimbot.sendMessage(message, "Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty jimmers. Current pool size 682 images in 28 albums.");
 		commandcount--;
     };
 	
 	if(message.content.startsWith(prefix + "status")) {
-		jimbot.sendMessage(message, "Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty jimmers. Current pool size 609 images in 28 albums.");
+		jimbot.sendMessage(message, "Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty jimmers. Current pool size 682 images in 28 albums.");
+		commandcount--;
+	};
+	if(message.content.startsWith(prefix + "changelog")) {
+		jimbot.sendMessage(message, "**160906** - added changelog and increased nr of !jiminsta from 28 to 99 images (videos will be added soon)\n\
+		");
 		commandcount--;
 	};
 });
