@@ -1,0 +1,16 @@
+{
+  "name": "jiminbot",
+  "version": "4.5.0",
+  "description": "Loving Jimin bot",
+  "main": "jimbot.js",
+  "dependencies": {
+    "discord.js": "^8.1.0",
+    "node-json-db": "^0.7.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node jimbot.js"
+  },
+  "author": "Xswordy",
+  "license": "ISC"
+}
