@@ -79,8 +79,7 @@ jimbot.on("message", function(message) {
 
 	if(message.content.startsWith(prefix + "changelog")) {
 		jimbot.sendMessage(message, "**160907** - added user based cooldown applying to all commands\n\
-		**160906** - added changelog and increased nr of !jiminsta from 28 to 99 images (videos will be added soon)\n\
-		");
+**160906** - added changelog and increased nr of !jiminsta from 28 to 99 images (videos will be added soon)");
 		commandcount--;
 	};
 
