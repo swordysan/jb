@@ -60,22 +60,23 @@ jimbot.on("message", function(message) {
 
 		if(message.content.startsWith(prefix + "roadmap")) {
         jimbot.sendMessage(message, "Features currently being worked on:\n\
-		Performance and Fansign commands for more advanced filtering.\n\
-		User based cooldown to prevent excessive spamming.\n\
-		~~24 hour uptime when I can afford it.~~ - Complete\n\
-		Larger image pool. - In Progress");
+		Performance, Fansign and other commands for more advanced filtering.\n\
+		Larger image pool. - In Progress\n\
+		~~User based cooldown to prevent excessive spamming.~~ - Complete, will be improved upon\n\
+		~~24 hour uptime when I can afford it.~~ - Complete");
   	};
 
 	if(message.content.startsWith(prefix + "uptime")){
-		jimbot.sendMessage(message, "Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty jimmers. Current pool size 682 images in 28 albums.");
+		jimbot.sendMessage(message, "Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty jimmers. Current pool size 736 images in 28 albums.");
   };
 
 	if(message.content.startsWith(prefix + "status")) {
-		jimbot.sendMessage(message, "Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty jimmers. Current pool size 682 images in 28 albums.");
+		jimbot.sendMessage(message, "Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty jimmers. Current pool size 736 images in 28 albums.");
 	};
 
 	if(message.content.startsWith(prefix + "changelog")) {
-		jimbot.sendMessage(message, "**160907** - added user based cooldown applying to all commands\n\
+		jimbot.sendMessage(message, "**160907 (latest)** - increased main pool from 682 to 736 images\n\
+**160907** - added user based cooldown applying to all commands\n\
 **160906** - added changelog and increased nr of !jiminsta from 28 to 99 images (videos will be added soon)");
 	};
 
