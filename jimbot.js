@@ -3,12 +3,17 @@ var Discord = require("discord.js");
 var jimbot = new Discord.Client();
 var ownerid ="99912330690707456";
 
+var ConfigDetails = require("./config/config.json");
+var Cooldown = require("./lib/cooldown.js");
+const CONFIG_COOLDOWN = ConfigDetails.cooldownTime;
 
 let jimin = require('./lists/jimin.json');
 let jimblep = require('./lists/jimblep.json');
 let jiminsta = require('./lists/jiminsta.json');
 
 var commandcount = 0; //how many times function is executed used for !status
+
+
 
 jimbot.on("message", function(message) {
 
@@ -20,15 +25,18 @@ jimbot.on("message", function(message) {
 	commandcount++;
 	var jimmers = commandcount-1;
 
-    if(message.content === ("!jimin")) {
+	if(message.content === "!jimin" && !Cooldown.checkCooldown(message)) {
+		Cooldown.updateTimeStamp(message);
 		jimbot.reply(message, jimin[Math.floor(Math.random() * (jimin.length))]);
 	};
 
-	if(message.content.startsWith(prefix + "jimblep")) {
+	if(message.content.startsWith(prefix + "jimblep") && !Cooldown.checkCooldown(message)) {
+		Cooldown.updateTimeStamp(message);
 		jimbot.reply(message, jimblep[Math.floor(Math.random() * (jimblep.length))]);
 	};
 
-	if(message.content.startsWith(prefix + "jiminsta")) {
+	if(message.content.startsWith(prefix + "jiminsta") && !Cooldown.checkCooldown(message)) {
+		Cooldown.updateTimeStamp(message);
 		jimbot.reply(message, jiminsta[Math.floor(Math.random() * (jiminsta.length))]);
 	};
 
@@ -70,7 +78,8 @@ jimbot.on("message", function(message) {
 	};
 
 	if(message.content.startsWith(prefix + "changelog")) {
-		jimbot.sendMessage(message, "**160906** - added changelog and increased nr of !jiminsta from 28 to 99 images (videos will be added soon)\n\
+		jimbot.sendMessage(message, "**160907** - added user based cooldown applying to all commands\n\
+		**160906** - added changelog and increased nr of !jiminsta from 28 to 99 images (videos will be added soon)\n\
 		");
 		commandcount--;
 	};
@@ -79,6 +88,15 @@ jimbot.on("message", function(message) {
 	if(message.author.id === ownerid){
 		if(message.content.startsWith(prefix + "hello")) {
 			jimbot.reply(message, "Hello pretty!");
+			commandcount--;
+		}
+		if(message.content.startsWith(prefix + "shutdown")) {
+			jimbot.sendMessage(message, "\n\
+			`Goodbye my friends`\n\
+			\n\http://puu.sh/r2sDl/9162b5bbab.jpg ");
+			setTimeout( function () {
+				process.exit(1);
+			}, 2000);
 			commandcount--;
 		}
 	};
@@ -102,9 +120,10 @@ function msToTime(s) {
 }
 
 //Ready?
-jimbot.on("ready", function(){
+jimbot.on("ready", function() {
     console.log("Bot Name : " + jimbot.user.username);
     console.log("Bot ID : " + jimbot.user.id);
+		Cooldown.Setup(jimbot,CONFIG_COOLDOWN, jimbot.users);
 });
 
 

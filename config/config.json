@@ -1,0 +1,6 @@
+{
+	"cooldownTime" : "5",
+	"featureStatus": {
+		"cooldown" : true
+	}
+}
