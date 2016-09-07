@@ -22,28 +22,29 @@ jimbot.on("message", function(message) {
 	//Exit and stop if it's not there
 	if (!message.content.startsWith(prefix)) return;
 	//how many times function is executed used for !status
-	commandcount++;
-	var jimmers = commandcount-1;
+	var jimmers = commandcount;
 
 	if(message.content === "!jimin" && !Cooldown.checkCooldown(message)) {
 		Cooldown.updateTimeStamp(message);
 		jimbot.reply(message, jimin[Math.floor(Math.random() * (jimin.length))]);
+		commandcount++;
 	};
 
 	if(message.content.startsWith(prefix + "jimblep") && !Cooldown.checkCooldown(message)) {
 		Cooldown.updateTimeStamp(message);
 		jimbot.reply(message, jimblep[Math.floor(Math.random() * (jimblep.length))]);
+		commandcount++;
 	};
 
 	if(message.content.startsWith(prefix + "jiminsta") && !Cooldown.checkCooldown(message)) {
 		Cooldown.updateTimeStamp(message);
 		jimbot.reply(message, jiminsta[Math.floor(Math.random() * (jiminsta.length))]);
+		commandcount++;
 	};
 
 	if(message.content.startsWith(prefix + "info")) {
         jimbot.sendMessage(message, "Made out of love for the prettiest girl in the world - in development. Remember to click the link for full res images. ");
-		commandcount--;
-    };
+		};
 
 	if(message.content.startsWith(prefix + "commands")) {
         jimbot.sendMessage(message, "`!jimin` - Generates a random Jimin.\n\
@@ -55,8 +56,7 @@ jimbot.on("message", function(message) {
 `!roadmap` - Development roadmap.\n\
 `!changelog` - Update history.\n\
 ");
-		commandcount--;
-    };
+		};
 
 		if(message.content.startsWith(prefix + "roadmap")) {
         jimbot.sendMessage(message, "Features currently being worked on:\n\
@@ -64,30 +64,25 @@ jimbot.on("message", function(message) {
 		User based cooldown to prevent excessive spamming.\n\
 		~~24 hour uptime when I can afford it.~~ - Complete\n\
 		Larger image pool. - In Progress");
-		commandcount--;
-    };
+  	};
 
 	if(message.content.startsWith(prefix + "uptime")){
 		jimbot.sendMessage(message, "Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty jimmers. Current pool size 682 images in 28 albums.");
-		commandcount--;
-    };
+  };
 
 	if(message.content.startsWith(prefix + "status")) {
 		jimbot.sendMessage(message, "Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty jimmers. Current pool size 682 images in 28 albums.");
-		commandcount--;
 	};
 
 	if(message.content.startsWith(prefix + "changelog")) {
 		jimbot.sendMessage(message, "**160907** - added user based cooldown applying to all commands\n\
 **160906** - added changelog and increased nr of !jiminsta from 28 to 99 images (videos will be added soon)");
-		commandcount--;
 	};
 
 	//Testing Adming commands with ownerid
 	if(message.author.id === ownerid){
 		if(message.content.startsWith(prefix + "hello")) {
 			jimbot.reply(message, "Hello pretty!");
-			commandcount--;
 		}
 		if(message.content.startsWith(prefix + "shutdown")) {
 			jimbot.sendMessage(message, "\n\
@@ -96,7 +91,6 @@ jimbot.on("message", function(message) {
 			setTimeout( function () {
 				process.exit(1);
 			}, 2000);
-			commandcount--;
 		}
 	};
 });
