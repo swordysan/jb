@@ -67,11 +67,11 @@ jimbot.on("message", function(message) {
   	};
 
 	if(message.content.startsWith(prefix + "uptime")){
-		jimbot.sendMessage(message, "Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty jimmers. Current pool size 736 images in 28 albums.");
+		jimbot.sendMessage(message, "Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty jimmers. Current pool size 736 images in 32 albums.");
   };
 
 	if(message.content.startsWith(prefix + "status")) {
-		jimbot.sendMessage(message, "Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty jimmers. Current pool size 736 images in 28 albums.");
+		jimbot.sendMessage(message, "Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty jimmers. Current pool size 736 images in 32 albums.");
 	};
 
 	if(message.content.startsWith(prefix + "changelog")) {
@@ -126,4 +126,4 @@ jimbot.on('warn', e => { console.warn(e); });
 jimbot.on('debug', e => { console.info(e); });
 
 
-jimbot.loginWithToken("MjIxMDY0ODI1OTYxMTg1Mjgw.CqpaMg.n0jPeX_bgGSDFU9n_IgW2gy38pY");
+jimbot.loginWithToken("oops");
