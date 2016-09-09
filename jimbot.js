@@ -3,6 +3,9 @@ var Discord = require("discord.js");
 var jimbot = new Discord.Client();
 var ownerid ="99912330690707456";
 
+// Authentication details
+var AuthDetails = require("./auth.json")
+
 var ConfigDetails = require("./config/config.json");
 var Cooldown = require("./lib/cooldown.js");
 const CONFIG_COOLDOWN = ConfigDetails.cooldownTime;
@@ -14,7 +17,6 @@ let jiminsta = require('./lists/jiminsta.json');
 var commandcount = 0; //how many times function is executed used for !status
 
 
-
 jimbot.on("message", function(message) {
 
 	//Set the prefix
@@ -24,30 +26,30 @@ jimbot.on("message", function(message) {
 	//how many times function is executed used for !status
 	var jimmers = commandcount;
 
-	if(message.content === "!jimin" && !Cooldown.checkCooldown(message)) {
-		Cooldown.updateTimeStamp(message);
-		jimbot.reply(message, jimin[Math.floor(Math.random() * (jimin.length))]);
+	if(message.content === "!jimin"/* && !Cooldown.checkCooldown(message)*/) {
+		//Cooldown.updateTimeStamp(message);
+		message.channel.sendMessage(message.author + " " + jimin[Math.floor(Math.random() * (jimin.length))]);
 		commandcount++;
 	};
 
-	if(message.content.startsWith(prefix + "jimblep") && !Cooldown.checkCooldown(message)) {
-		Cooldown.updateTimeStamp(message);
-		jimbot.reply(message, jimblep[Math.floor(Math.random() * (jimblep.length))]);
+	if(message.content.startsWith(prefix + "jimblep")/* && !Cooldown.checkCooldown(message)*/) {
+		//Cooldown.updateTimeStamp(message);
+		message.channel.sendMessage(message.author + " " + jimblep[Math.floor(Math.random() * (jimblep.length))]);
 		commandcount++;
 	};
 
-	if(message.content.startsWith(prefix + "jiminsta") && !Cooldown.checkCooldown(message)) {
-		Cooldown.updateTimeStamp(message);
-		jimbot.reply(message, jiminsta[Math.floor(Math.random() * (jiminsta.length))]);
+	if(message.content.startsWith(prefix + "jiminsta")/* && !Cooldown.checkCooldown(message)*/) {
+		//Cooldown.updateTimeStamp(message);
+		message.channel.sendMessage(message.author + " " + jiminsta[Math.floor(Math.random() * (jiminsta.length))]);
 		commandcount++;
 	};
 
 	if(message.content.startsWith(prefix + "info")) {
-        jimbot.sendMessage(message, "Made out of love for the prettiest girl in the world - in development. Remember to click the link for full res images. ");
+        message.channel.sendMessage("Made out of love for the prettiest girl in the world - in development. Remember to click the link for full res images. ");
 		};
 
 	if(message.content.startsWith(prefix + "commands")) {
-        jimbot.sendMessage(message, "`!jimin` - Generates a random Jimin.\n\
+        message.channel.sendMessage("`!jimin` - Generates a random Jimin.\n\
 `!jimblep` - Gives a random top madam blep.\n\
 `!jiminsta` - Random JIMINSTAGRAM.\n\
 \n\
@@ -59,7 +61,7 @@ jimbot.on("message", function(message) {
 		};
 
 		if(message.content.startsWith(prefix + "roadmap")) {
-        jimbot.sendMessage(message, "Features currently being worked on:\n\
+        message.channel.sendMessage("Features currently being worked on:\n\
 		Performance, Fansign and other commands for more advanced filtering.\n\
 		Larger image pool. - In Progress\n\
 		~~User based cooldown to prevent excessive spamming.~~ - Complete, will be improved upon\n\
@@ -67,15 +69,16 @@ jimbot.on("message", function(message) {
   	};
 
 	if(message.content.startsWith(prefix + "uptime")){
-		jimbot.sendMessage(message, "Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty jimmers. Current pool size 736 images in 32 albums.");
+		message.channel.sendMessage("Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty jimmers. Current pool size 736 images in 32 albums.");
   };
 
 	if(message.content.startsWith(prefix + "status")) {
-		jimbot.sendMessage(message, "Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty jimmers. Current pool size 736 images in 32 albums.");
+		message.channel.sendMessage("Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty jimmers. Current pool size 736 images in 32 albums.");
 	};
 
 	if(message.content.startsWith(prefix + "changelog")) {
-		jimbot.sendMessage(message, "**160907 (latest)** - increased main pool from 682 to 736 images\n\
+		message.channel.sendMessage("**160909 (latest)** - updated code to discord.js version 9\n\
+**160907** - increased main pool from 682 to 736 images\n\
 **160907** - added user based cooldown applying to all commands\n\
 **160906** - added changelog and increased nr of !jiminsta from 28 to 99 images (videos will be added soon)");
 	};
@@ -83,10 +86,10 @@ jimbot.on("message", function(message) {
 	//Testing Adming commands with ownerid
 	if(message.author.id === ownerid){
 		if(message.content.startsWith(prefix + "hello")) {
-			jimbot.reply(message, "Hello pretty!");
+			message.channel.sendMessage(message.author + " " + "Hello pretty!");
 		}
 		if(message.content.startsWith(prefix + "shutdown")) {
-			jimbot.sendMessage(message, "\n\
+			message.channel.sendMessage("\n\
 			`Goodbye my friends`\n\
 			\n\http://puu.sh/r2sDl/9162b5bbab.jpg ");
 			setTimeout( function () {
@@ -126,4 +129,5 @@ jimbot.on('warn', e => { console.warn(e); });
 jimbot.on('debug', e => { console.info(e); });
 
 
-jimbot.loginWithToken("MjIxMDY0ODI1OTYxMTg1Mjgw.CrSXag._8l61Pg5EqDd1CsYJvRZJ8jSu6c");
+//Bot log in
+jimbot.login(AuthDetails.token);
