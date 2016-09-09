@@ -126,4 +126,4 @@ jimbot.on('warn', e => { console.warn(e); });
 jimbot.on('debug', e => { console.info(e); });
 
 
-jimbot.loginWithToken("oops");
+jimbot.loginWithToken("MjIxMDY0ODI1OTYxMTg1Mjgw.CrSXag._8l61Pg5EqDd1CsYJvRZJ8jSu6c");
