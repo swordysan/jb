@@ -29,21 +29,21 @@ jimbot.on("message", message => {
 	// How many times function is executed used for !status
 	var jimmers = commandcount;
 
-	if(message.content === "!jimin" /*&& !Cooldown.checkCooldown(message)*/) {
+	if(message.content === "!jimin"/* && !Cooldown.checkCooldown(message)*/) {
 		//Cooldown.updateTimeStamp(message);
-		message.channel.sendMessage(message.author + " " + jimin[Math.floor(Math.random() * (jimin.length))]);
+		message.reply(jimin[Math.floor(Math.random() * (jimin.length))]);
 		commandcount++;
 	};
 
 	if(message.content.startsWith(prefix + "jimblep")/* && !Cooldown.checkCooldown(message)*/) {
 		//Cooldown.updateTimeStamp(message);
-		message.channel.sendMessage(message.author + " " + jimblep[Math.floor(Math.random() * (jimblep.length))]);
+		message.reply(jimblep[Math.floor(Math.random() * (jimblep.length))]);
 		commandcount++;
 	};
 
 	if(message.content.startsWith(prefix + "jiminsta")/* && !Cooldown.checkCooldown(message)*/) {
 		//Cooldown.updateTimeStamp(message);
-		message.channel.sendMessage(message.author + " " + jiminsta[Math.floor(Math.random() * (jiminsta.length))]);
+		message.reply(jiminsta[Math.floor(Math.random() * (jiminsta.length))]);
 		commandcount++;
 	};
 
@@ -72,18 +72,25 @@ jimbot.on("message", message => {
   	};
 
 	if(message.content.startsWith(prefix + "uptime")){
-		message.channel.sendMessage("Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty jimmers. Current pool size 736 images in 32 albums.");
+		message.channel.sendMessage("Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty jimmers. Current pool size 843 images in 40 albums.");
   };
 
 	if(message.content.startsWith(prefix + "status")) {
-		message.channel.sendMessage("Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty jimmers. Current pool size 736 images in 32 albums.");
+		message.channel.sendMessage("Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty jimmers. Current pool size 843 images in 40 albums.");
 	};
 
 	if(message.content.startsWith(prefix + "changelog")) {
-		message.channel.sendMessage("**160909 (latest)** - updated code to discord.js version 9\n\
-**160907** - increased main pool from 682 to 736 images\n\
-**160907** - added user based cooldown applying to all commands\n\
-**160906** - added changelog and increased nr of !jiminsta from 28 to 99 images (videos will be added soon)");
+		message.channel.sendMessage("**Features**\n\
+\n\
+`160909 (latest)` - updated code to discord.js version 9, broke cooldowns\n\
+`160907` - added user based cooldown applying to all commands\n\
+`160906` - added changelog\n\
+\n\
+**Image pool**\n\
+\n\
+`160910` - main from 736 to 843 added some 2014/15 and newer stuff\n\
+`160907` - increased main pool from 682 to 736 images\n\
+`160906` - increased nr of !jiminsta from 28 to 99 images (videos will be added soon)");
 	};
 
 	// Testing Admin commands with ownerid
