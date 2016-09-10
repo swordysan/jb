@@ -29,8 +29,8 @@ jimbot.on("message", message => {
 	// How many times function is executed used for !status
 	var jimmers = commandcount;
 
-	if(message.content === "!jimin" && !Cooldown.checkCooldown(message)) {
-		Cooldown.updateTimeStamp(message);
+	if(message.content === "!jimin" /*&& !Cooldown.checkCooldown(message)*/) {
+		//Cooldown.updateTimeStamp(message);
 		message.channel.sendMessage(message.author + " " + jimin[Math.floor(Math.random() * (jimin.length))]);
 		commandcount++;
 	};
