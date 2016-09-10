@@ -3,6 +3,9 @@
   "version": "6.5.0",
   "description": "Loving Jimin bot",
   "main": "jimbot.js",
+  "engines": {
+    "node" : "6.5.0"
+  },
   "dependencies": {
     "discord.js": "^9.1.0"
   },
