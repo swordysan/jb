@@ -65,6 +65,7 @@ jimbot.on("message", message => {
 
 		if(message.content.startsWith(prefix + "roadmap")) {
         message.channel.sendMessage("Features currently being worked on:\n\
+		Command to view newest uploads from a pool which incrementally exhausts.\n\
 		Performance, Fansign and other commands for more advanced filtering.\n\
 		Larger image pool. - In Progress\n\
 		~~User based cooldown to prevent excessive spamming.~~ - Complete, will be improved upon\n\
@@ -82,7 +83,8 @@ jimbot.on("message", message => {
 	if(message.content.startsWith(prefix + "changelog")) {
 		message.channel.sendMessage("**Features**\n\
 \n\
-`160909 (latest)` - updated code to discord.js version 9, broke cooldowns\n\
+`160911 (latest)` - new pool formatting so you won't get empty (date only) replies anymore\n\
+`160909` - updated code to discord.js version 9, broke cooldowns\n\
 `160907` - added user based cooldown applying to all commands\n\
 `160906` - added changelog\n\
 \n\
