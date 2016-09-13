@@ -19,6 +19,8 @@ let jimblep = require('./lists/jimblep.json');
 let jiminsta = require('./lists/jiminsta.json');
 var favdb = new JsonDB("favourites", true, true);
 var favs = new Array();
+var histdb = new JsonDB("history", true, true);
+var hist = new Array();
 
 // How many times function is executed used for !status
 var commandcount = 0;
@@ -37,19 +39,62 @@ jimbot.on("message", message => {
 
 	if(message.content === "!jimin" /*&& !Cooldown.checkCooldown(message)*/) {
 		//Cooldown.updateTimeStamp(message);
-		message.reply(jimin[Math.floor(Math.random() * (jimin.length))]);
+		var jim = jimin[Math.floor(Math.random() * (jimin.length))]
+		message.reply(jim);
+		let args = jim.split(" ").slice(0);
+		let temp = args.slice(0).join(" ");
+		try{
+			hist = histdb.getData("/" + jimbot.user.id, hist);
+			hist.push(temp);
+			histdb.push("/" + jimbot.user.id, hist);
+		}
+		catch(error){
+			var temphist = new Array();
+
+			temphist.push(temp);
+			histdb.push("/" + jimbot.user.id, temphist);
+		}
 		commandcount++;
+
 	};
 
 	if(message.content.startsWith(prefix + "jimblep")/* && !Cooldown.checkCooldown(message)*/) {
 		//Cooldown.updateTimeStamp(message);
-		message.reply(jimblep[Math.floor(Math.random() * (jimblep.length))]);
+		var blep = jimblep[Math.floor(Math.random() * (jimblep.length))]
+		message.reply(blep);
+		let args = blep.split(" ").slice(0);
+		let temp = args.slice(0).join(" ");
+		try{
+			hist = histdb.getData("/" + jimbot.user.id, hist);
+			hist.push(temp);
+			histdb.push("/" + jimbot.user.id, hist);
+		}
+		catch(error){
+			var temphist = new Array();
+
+			temphist.push(temp);
+			histdb.push("/" + jimbot.user.id, temphist);
+		}
 		commandcount++;
 	};
 
 	if(message.content.startsWith(prefix + "jiminsta")/* && !Cooldown.checkCooldown(message)*/) {
 		//Cooldown.updateTimeStamp(message);
-		message.reply(jiminsta[Math.floor(Math.random() * (jiminsta.length))]);
+		var insta = jiminsta[Math.floor(Math.random() * (jiminsta.length))]
+		message.reply(insta);
+		let args = insta.split(" ").slice(0);
+		let temp = args.slice(0).join(" ");
+		try{
+			hist = histdb.getData("/" + jimbot.user.id, hist);
+			hist.push(temp);
+			histdb.push("/" + jimbot.user.id, hist);
+		}
+		catch(error){
+			var temphist = new Array();
+
+			temphist.push(temp);
+			histdb.push("/" + jimbot.user.id, temphist);
+		}
 		commandcount++;
 	};
 
@@ -64,7 +109,7 @@ jimbot.on("message", message => {
 \n\
 `!love` - Adds the latest submitted Jimin to your favourites.\n\
 `!jimfav [number]` - Pulls the selected favourite from your list. e.g. !jimfav 0 \n\
-`!randomfav` - Same as the above but with a random favourite. Note that if you don't have many Jimins added it won't be very random.\n\
+`!randfav` - Same as the above but with a random favourite. Note that if you don't have many Jimins added it won't be very random.\n\
 \n\
 `!info` - Basic bot info.\n\
 `!status` - Uptime and status.\n\
@@ -109,23 +154,11 @@ This message auto-deletes in 30 seconds. \n\
 	};
 
 
-	// Just testing stuff
-	if (message.content.startsWith(prefix + "test")) {
-		var t = message.channel.fetchMessages({limit: 5});
-		t.then(function(collection) {
-			let replyMsg = message.content.split(" ").slice(1);
-			collection.forEach(function(elem)  {
-				replyMsg += elem.content + '\n' ;
-			});
-			message.reply(replyMsg);
-		})
-}
-
 	// Fvourites (change command names to be more Jimin fitting)
-
+	// Adds the last published Jimin by the bot to your favourite list.
 	if(message.content.startsWith(prefix + "love")){
-		let args = message.content.split(" ").slice(1);
-		let temp = args.slice(0).join(" ");
+		hist = histdb.getData("/" + jimbot.user.id, hist);
+		temp = hist[hist.length - 1]; // Selects the last jimin bot post.
 		console.log("Saved this Jimin for " + message.author.username + ": " + temp);
 
 		try{
@@ -139,9 +172,10 @@ This message auto-deletes in 30 seconds. \n\
 			tempfavs.push(temp);
 			favdb.push("/" + message.author.id, tempfavs);
 		}
-		message.reply("Added this Jimin to your favourites.");
+		message.reply("Added this Jimin to your favourites. Use `!jimfav [number]` (starts at 0), or `!randfav` to check them out.");
 	};
 
+	// Using a number e.g. !jimfav [5] you can specify the bot to return your favourite Jimin at that position.
 	if(message.content.startsWith(prefix + "jimfav")){
 			temp = message.content.split(" ")[1];
 			if(isNaN(temp) === true){
@@ -161,7 +195,8 @@ This message auto-deletes in 30 seconds. \n\
 			commandcount++;
 		}
 
-	if(message.content === prefix + "randomfav"){
+	// Alternatively you can just request a random favourite from your pool.
+	if(message.content === prefix + "randfav"){
 		try{
 			favs = favdb.getData("/" + message.author.id, favs);
 			console.log("Length of Favourites Array ; " + favs.length);
@@ -172,7 +207,7 @@ This message auto-deletes in 30 seconds. \n\
 		}
 		catch(error){
 			console.log("Error : " + error)
-			message.reply("You haven't added any Jimbos to your favourites yet, why not try **" + prefix + "favourite**. next time you see one you like");
+			message.reply("You haven't added any Jimbos to your favourites yet, why not try `" + prefix + "favourite`. next time you see one you like");
 		}
 	};
 
