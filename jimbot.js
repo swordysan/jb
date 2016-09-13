@@ -40,7 +40,7 @@ jimbot.on("message", message => {
 	if(message.content === "!jimin" /*&& !Cooldown.checkCooldown(message)*/) {
 		//Cooldown.updateTimeStamp(message);
 		var jim = jimin[Math.floor(Math.random() * (jimin.length))]
-		message.reply(jim);
+		message.reply(jim).then(commandcount++);
 		let args = jim.split(" ").slice(0);
 		let temp = args.slice(0).join(" ");
 		try{
@@ -54,14 +54,12 @@ jimbot.on("message", message => {
 			temphist.push(temp);
 			histdb.push("/" + jimbot.user.id, temphist);
 		}
-		commandcount++;
-
 	};
 
 	if(message.content.startsWith(prefix + "jimblep")/* && !Cooldown.checkCooldown(message)*/) {
 		//Cooldown.updateTimeStamp(message);
 		var blep = jimblep[Math.floor(Math.random() * (jimblep.length))]
-		message.reply(blep);
+		message.reply(blep).then(commandcount++);
 		let args = blep.split(" ").slice(0);
 		let temp = args.slice(0).join(" ");
 		try{
@@ -75,13 +73,12 @@ jimbot.on("message", message => {
 			temphist.push(temp);
 			histdb.push("/" + jimbot.user.id, temphist);
 		}
-		commandcount++;
 	};
 
 	if(message.content.startsWith(prefix + "jiminsta")/* && !Cooldown.checkCooldown(message)*/) {
 		//Cooldown.updateTimeStamp(message);
 		var insta = jiminsta[Math.floor(Math.random() * (jiminsta.length))]
-		message.reply(insta);
+		message.reply(insta).then(commandcount++);
 		let args = insta.split(" ").slice(0);
 		let temp = args.slice(0).join(" ");
 		try{
@@ -95,7 +92,6 @@ jimbot.on("message", message => {
 			temphist.push(temp);
 			histdb.push("/" + jimbot.user.id, temphist);
 		}
-		commandcount++;
 	};
 
 	if(message.content.startsWith(prefix + "info")) {
@@ -116,8 +112,8 @@ jimbot.on("message", message => {
 `!roadmap` - Development roadmap.\n\
 `!changelog` - Update history.\n\
 \n\
-This message auto-deletes in 30 seconds. \n\
-").then(message => message.delete([30000]));
+This message auto-deletes in 25 seconds. \n\
+").then(message => message.delete([25000]));
 		};
 
 	if(message.content.startsWith(prefix + "roadmap")) {
@@ -187,11 +183,12 @@ This message auto-deletes in 30 seconds. \n\
 				console.log("Length of Favourites Array ; " + favs.length);
 			}
 			catch(error) {
-				message.reply("You haven't reached that number of favourites yet. Add more Jimins to your pool using `!love` when you see one you like!");
-				return
+				message.reply("Looks like you don't have any favourite Jimins. Try adding some using `!love` when you see one you like!");
+				return;
 			}
 
 			if((temp >= favs.length)||(temp < 0)){
+				message.reply("You haven't reached that number of favourites yet. Add more Jimins to your pool using `!love` when you see one you like!");
 				return;
 			}
 			console.log("Favourite is " + favs[temp])
