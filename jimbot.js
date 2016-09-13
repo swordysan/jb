@@ -1,6 +1,7 @@
-"use strict";
-var Discord = require("discord.js");
-var jimbot = new Discord.Client();
+const Discord = require("discord.js");
+var jimbot = new Discord.Client({
+	fetch_all_members: true
+});
 var ownerid = "99912330690707456";
 
 // Authentication details
@@ -29,7 +30,7 @@ jimbot.on("message", message => {
 	// How many times function is executed used for !status
 	var jimmers = commandcount;
 
-	if(message.content === "!jimin"/* && !Cooldown.checkCooldown(message)*/) {
+	if(message.content === "!jimin" /*&& !Cooldown.checkCooldown(message)*/) {
 		//Cooldown.updateTimeStamp(message);
 		message.reply(jimin[Math.floor(Math.random() * (jimin.length))]);
 		commandcount++;
@@ -63,7 +64,7 @@ jimbot.on("message", message => {
 ");
 		};
 
-		if(message.content.startsWith(prefix + "roadmap")) {
+	if(message.content.startsWith(prefix + "roadmap")) {
         message.channel.sendMessage("Features currently being worked on:\n\
 		Command to view newest uploads from a pool which incrementally exhausts.\n\
 		Performance, Fansign and other commands for more advanced filtering.\n\
@@ -95,11 +96,29 @@ jimbot.on("message", message => {
 `160906` - increased nr of !jiminsta from 28 to 99 images (videos will be added soon)");
 	};
 
+
+
 	// Testing Admin commands with ownerid
 	if(message.author.id === ownerid){
+
 		if(message.content.startsWith(prefix + "hello")) {
 			message.channel.sendTTSMessage(message.author + " " + "Hello pretty!");
-		}
+		};
+
+		// Sets the status to whatever you want
+		if(message.content.startsWith(prefix + "setstatus")) {
+			let args = message.content.split(" ").slice(1);
+			let status = args.slice(0).join(" ");
+			jimbot.user.setStatus('online', `${status}`);
+		};
+
+		// Can only do this twice a day due to discord CD! Use with care
+		if(message.content.startsWith(prefix + "setname")) {
+			let args = message.content.split(" ").slice(1);
+			let name = args.slice(0).join(" ");
+			jimbot.user.setUsername(`${name}`);
+		};
+
 		if(message.content.startsWith(prefix + "shutdown")) {
 			message.channel.sendMessage("\n\
 			`Goodbye my friends`\n\
@@ -130,9 +149,8 @@ function msToTime(s) {
 
 //Ready?
 jimbot.on("ready", () => {
-		console.log(jimbot.user.username + " (ID:" + jimbot.user.id + ") ready on " + jimbot.guilds.size + " servers.")
-    Cooldown.Setup(jimbot,CONFIG_COOLDOWN, jimbot.users);
-		jimbot.user.setStatus('online', 'Like a Cat');
+		console.log(jimbot.user.username + " (ID:" + jimbot.user.id + ") ready on " + jimbot.guilds.size + " servers.");
+    Cooldown.Setup(jimbot, CONFIG_COOLDOWN, jimbot.users);
 });
 
 
