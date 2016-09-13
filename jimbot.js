@@ -182,17 +182,20 @@ This message auto-deletes in 30 seconds. \n\
 				message.reply("Use a number to select a favourite from your list.");
 				return;
 			}
-
-			favs = favdb.getData("/" + message.author.id, favs);
-			console.log("Length of Favourites Array ; " + favs.length);
+			try{
+				favs = favdb.getData("/" + message.author.id, favs);
+				console.log("Length of Favourites Array ; " + favs.length);
+			}
+			catch(error) {
+				message.reply("You haven't reached that number of favourites yet. Add more Jimins to your pool using `!love` when you see one you like!");
+				return
+			}
 
 			if((temp >= favs.length)||(temp < 0)){
-				message.reply("You haven't reached that number of favourites yet. Add more Jimins to your pool!");
 				return;
 			}
 			console.log("Favourite is " + favs[temp])
-			message.reply(" one of your favourite Jimins is: " + [favs[temp]]);
-			commandcount++;
+			message.reply(" one of your favourite Jimins is: " + [favs[temp]]).then(commandcount++);
 		}
 
 	// Alternatively you can just request a random favourite from your pool.
@@ -202,12 +205,11 @@ This message auto-deletes in 30 seconds. \n\
 			console.log("Length of Favourites Array ; " + favs.length);
 			var rand = Math.floor(Math.random()*favs.length);
 			console.log("Favourite is " + favs[rand])
-			message.reply(" one of your favourite Jimins is: " + [favs[rand]]);
-			commandcount++;
+			message.reply(" one of your favourite Jimins is: " + [favs[rand]]).then(commandcount++);
 		}
 		catch(error){
 			console.log("Error : " + error)
-			message.reply("You haven't added any Jimbos to your favourites yet, why not try `" + prefix + "favourite`. next time you see one you like");
+			message.reply("You haven't added any Jimbos to your favourites yet, why not try `" + prefix + "love`. next time you see one you like");
 		}
 	};
 
