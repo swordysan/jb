@@ -44,15 +44,15 @@ jimbot.on("message", message => {
 		let args = jim.split(" ").slice(0);
 		let temp = args.slice(0).join(" ");
 		try{
-			hist = histdb.getData("/" + jimbot.user.id, hist);
+			hist = histdb.getData("/" + message.channel.id, hist);
 			hist.push(temp);
-			histdb.push("/" + jimbot.user.id, hist);
+			histdb.push("/" + message.channel.id, hist);
 		}
 		catch(error){
 			var temphist = new Array();
 
 			temphist.push(temp);
-			histdb.push("/" + jimbot.user.id, temphist);
+			histdb.push("/" + message.channel.id, temphist);
 		}
 	};
 
@@ -63,15 +63,15 @@ jimbot.on("message", message => {
 		let args = blep.split(" ").slice(0);
 		let temp = args.slice(0).join(" ");
 		try{
-			hist = histdb.getData("/" + jimbot.user.id, hist);
+			hist = histdb.getData("/" + message.channel.id, hist);
 			hist.push(temp);
-			histdb.push("/" + jimbot.user.id, hist);
+			histdb.push("/" + message.channel.id, hist);
 		}
 		catch(error){
 			var temphist = new Array();
 
 			temphist.push(temp);
-			histdb.push("/" + jimbot.user.id, temphist);
+			histdb.push("/" + message.channel.id, temphist);
 		}
 	};
 
@@ -82,15 +82,15 @@ jimbot.on("message", message => {
 		let args = insta.split(" ").slice(0);
 		let temp = args.slice(0).join(" ");
 		try{
-			hist = histdb.getData("/" + jimbot.user.id, hist);
+			hist = histdb.getData("/" + message.channel.id, hist);
 			hist.push(temp);
-			histdb.push("/" + jimbot.user.id, hist);
+			histdb.push("/" + message.channel.id, hist);
 		}
 		catch(error){
 			var temphist = new Array();
 
 			temphist.push(temp);
-			histdb.push("/" + jimbot.user.id, temphist);
+			histdb.push("/" + message.channel.id, temphist);
 		}
 	};
 
@@ -121,8 +121,11 @@ This message auto-deletes in 25 seconds. \n\
 		Command to view newest uploads from a pool which incrementally exhausts.\n\
 		Performance, Fansign and other commands for more advanced filtering.\n\
 		Larger image pool. - In Progress\n\
+		~~Ability to add images to favourites and browse through them~~ - Complete\n\
 		~~User based cooldown to prevent excessive spamming.~~ - Complete, will be improved upon\n\
-		~~24 hour uptime when I can afford it.~~ - Complete");
+		~~24 hour uptime when I can afford it.~~ - Complete\n\
+		\n\
+		This message auto-deletes in 20 seconds.").then(message => message.delete([20000]));
   	};
 
 	if(message.content.startsWith(prefix + "uptime")){
@@ -136,7 +139,8 @@ This message auto-deletes in 25 seconds. \n\
 	if(message.content.startsWith(prefix + "changelog")) {
 		message.channel.sendMessage("**Features**\n\
 \n\
-`160913 (latest)` - added user favourites, check !commands for how to use \n\
+`160914 (latest)` - fixed several favourites bugs and crashes\n\
+`160913` - added user favourites, check !commands for how to use \n\
 `160911` - new pool formatting so you won't get empty (date only) replies anymore\n\
 `160909` - updated code to discord.js version 9, broke cooldowns\n\
 `160907` - added user based cooldown applying to all commands\n\
@@ -153,7 +157,7 @@ This message auto-deletes in 25 seconds. \n\
 	// Fvourites (change command names to be more Jimin fitting)
 	// Adds the last published Jimin by the bot to your favourite list.
 	if(message.content.startsWith(prefix + "love")){
-		hist = histdb.getData("/" + jimbot.user.id, hist);
+		hist = histdb.getData("/" + message.channel.id, hist);
 		temp = hist[hist.length - 1]; // Selects the last jimin bot post.
 		console.log("Saved this Jimin for " + message.author.username + ": " + temp);
 
