@@ -17,9 +17,9 @@ const CONFIG_COOLDOWN = ConfigDetails.cooldownTime;
 let jimin = require('./lists/jimin.json');
 let jimblep = require('./lists/jimblep.json');
 let jiminsta = require('./lists/jiminsta.json');
-var favdb = new JsonDB("favourites", true, true);
+var favdb = new JsonDB("./lists/favourites", true, true);
 var favs = new Array();
-var histdb = new JsonDB("history", true, true);
+var histdb = new JsonDB("./lists/history", true, true);
 var hist = new Array();
 
 // How many times function is executed used for !status
