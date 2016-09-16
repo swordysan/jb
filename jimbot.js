@@ -35,16 +35,16 @@ jimbot.on("message", message => {
 	// Exit if it's a bot
 	if (message.author.bot) return;
 	// Rename
-	var jimmers = commandcount;
+	var jimmers = commandcount; // Renamed to jimmers for when using it in !status
 
 	if(message.content === "!jimin" /*&& !Cooldown.checkCooldown(message)*/) {
 		//Cooldown.updateTimeStamp(message);
-		var jim = jimin[Math.floor(Math.random() * (jimin.length))]
-		message.reply(jim).then(commandcount++);
+		var jim = jimin[Math.floor(Math.random() * (jimin.length))] // Generate a random Jimin from the pool.
+		message.reply(jim).then(commandcount++); // Adds it to the counter (see !status) used to see how many Jimins have been delivered since startup.
 		let args = jim.split(" ").slice(0);
-		let temp = args.slice(0).join(" ");
+		let temp = args.slice(0).join(" "); // Joins the entire line together so that it can be pushed into the history database.
 		try{
-			hist = histdb.getData("/" + message.channel.id, hist);
+			hist = histdb.getData("/" + message.channel.id, hist); // History DB is sorted by the channel ID in which the Jimin was requested.
 			hist.push(temp);
 			histdb.push("/" + message.channel.id, hist);
 		}
@@ -106,14 +106,16 @@ jimbot.on("message", message => {
 `!love` - Adds the latest submitted Jimin to your favourites.\n\
 `!jimfav [number]` - Pulls the selected favourite from your list. e.g. !jimfav 0 \n\
 `!randfav` - Same as the above but with a random favourite. Note that if you don't have many Jimins added it won't be very random.\n\
+`!listfav` - Receive a Private Message containing a list of all your favourites.\n\
+`!delfav [number]` - Delete the selected favourite from your list. *This is irreversible.* e.g. !delfav 0\n\
 \n\
 `!info` - Basic bot info.\n\
 `!status` - Uptime and status.\n\
 `!roadmap` - Development roadmap.\n\
 `!changelog` - Update history.\n\
 \n\
-This message auto-deletes in 25 seconds. \n\
-").then(message => message.delete([25000]));
+This message auto-deletes in 30 seconds. \n\
+").then(message => message.delete([30000]));
 		};
 
 	if(message.content.startsWith(prefix + "roadmap")) {
@@ -139,7 +141,7 @@ This message auto-deletes in 25 seconds. \n\
 	if(message.content.startsWith(prefix + "changelog")) {
 		message.channel.sendMessage("**Features**\n\
 \n\
-`160914 (latest)` - fixed several favourites bugs and crashes\n\
+`160914 (latest)` - fixed several favourites bugs and crashes, added !listfav and !delfav\n\
 `160913` - added user favourites, check !commands for how to use \n\
 `160911` - new pool formatting so you won't get empty (date only) replies anymore\n\
 `160909` - updated code to discord.js version 9, broke cooldowns\n\
@@ -154,9 +156,9 @@ This message auto-deletes in 25 seconds. \n\
 	};
 
 
-	// Fvourites (change command names to be more Jimin fitting)
+	// Fvourites
 	// Adds the last published Jimin by the bot to your favourite list.
-	if(message.content.startsWith(prefix + "love")){
+	if(message.content.startsWith(prefix + "love")) {
 		hist = histdb.getData("/" + message.channel.id, hist);
 		temp = hist[hist.length - 1]; // Selects the last jimin bot post.
 		console.log("Saved this Jimin for " + message.author.username + ": " + temp);
@@ -172,27 +174,27 @@ This message auto-deletes in 25 seconds. \n\
 			tempfavs.push(temp);
 			favdb.push("/" + message.author.id, tempfavs);
 		}
-		message.reply("Added this Jimin to your favourites. Use `!jimfav [number]` (starts at 0), or `!randfav` to check them out.");
+		message.reply("Added this Jimin to your favourites. Use `!jimfav [number]` (starts at 0), or `!randfav` to check them out.").then(message => message.delete([10000]));
 	};
 
 	// Using a number e.g. !jimfav [5] you can specify the bot to return your favourite Jimin at that position.
-	if(message.content.startsWith(prefix + "jimfav")){
+	if(message.content.startsWith(prefix + "jimfav")) {
 			temp = message.content.split(" ")[1];
 			if(isNaN(temp) === true){
-				message.reply("Use a number to select a favourite from your list.");
+				message.reply("Use a number to select a favourite from your list.").then(message => message.delete([10000]));;
 				return;
 			}
 			try{
 				favs = favdb.getData("/" + message.author.id, favs);
 				console.log("Length of Favourites Array ; " + favs.length);
 			}
-			catch(error) {
-				message.reply("Looks like you don't have any favourite Jimins. Try adding some using `!love` when you see one you like!");
+			catch(error) { // If the author user ID doesn't exist in the database return to avoid crashing.
+				message.reply("Looks like you don't have any favourite Jimins. Try adding some using `!love` when you see one you like!").then(message => message.delete([10000]));
 				return;
 			}
 
-			if((temp >= favs.length)||(temp < 0)){
-				message.reply("You haven't reached that number of favourites yet. Add more Jimins to your pool using `!love` when you see one you like!");
+			if((temp >= favs.length)||(temp < 0)) {
+				message.reply("You haven't reached that number of favourites yet. Add more Jimins to your pool using `!love` when you see one you like!").then(message => message.delete([10000]));
 				return;
 			}
 			console.log("Favourite is " + favs[temp])
@@ -200,7 +202,7 @@ This message auto-deletes in 25 seconds. \n\
 		}
 
 	// Alternatively you can just request a random favourite from your pool.
-	if(message.content === prefix + "randfav"){
+	if(message.content === prefix + "randfav") {
 		try{
 			favs = favdb.getData("/" + message.author.id, favs);
 			console.log("Length of Favourites Array ; " + favs.length);
@@ -210,11 +212,53 @@ This message auto-deletes in 25 seconds. \n\
 		}
 		catch(error){
 			console.log("Error : " + error)
-			message.reply("You haven't added any Jimbos to your favourites yet, why not try `" + prefix + "love`. next time you see one you like");
+			message.reply("You haven't added any Jimbos to your favourites yet, why not try `" + prefix + "love`. next time you see one you like").then(message => message.delete([10000]));
 		}
 	};
 
+	// Sends you a list of your favourites via DM.
+	if(message.content.startsWith(prefix + "listfav")) {
+		//return;
+			favs = favdb.getData("/" + message.author.id, favs);
+			message.author.sendCode('', favs, {
+				split: true
+			});
+		}
 
+	// Delete a Jimin from your favourites e.g. !delfav [0]
+	if(message.content.startsWith(prefix + "delfav")) {
+		temp = message.content.split(" ")[1];
+		try { // Need to get the array here so that the bot doesn't crash if a user doesn't have any favourites.
+		favs = favdb.getData("/" + message.author.id, favs);
+	  }
+		catch(error) {
+		message.reply("Looks like you don't have any favourite Jimins. Try adding some using `!love` when you see one you like!").then(message => message.delete([10000]));
+		return;
+		}
+
+		if(isNaN(temp) === true){
+			message.reply("Use a number to select which favourite to delete. (e.g. `!delfav 0`)").then(message => message.delete([10000]));
+			return;
+		}
+
+		if((temp >= favs.length)||(temp < 0)){
+		message.reply("You haven't reached that number of favourites yet. Add more Jimins to your pool using `!love` when you see one you like!").then(message => message.delete([10000]));
+		return;
+		}
+
+		try{
+			favs.splice(temp, 1); // Deletes the selected favourite.
+			favdb.push("/" + message.author.id, favs); // Updates the database.
+
+		}
+		catch(error) { // If the author user ID doesn't exist in the database return to avoid crashing.
+		message.reply("Looks like you don't have any favourite Jimins. Try adding some using `!love` when you see one you like!").then(message => message.delete([10000]));
+		return;
+		}
+
+		console.log("Delete favourite " + favs[temp] + " for " + message.author.username);
+		message.reply("The selected Jimin was successfully deleted from your list.").then(message => message.delete([10000]));
+	}
 
 	// Testing Admin commands with ownerid
 	if(message.author.id === ownerid){
@@ -239,6 +283,7 @@ This message auto-deletes in 25 seconds. \n\
 
 		// Shuts down the bot after 2 seconds
 		if(message.content.startsWith(prefix + "shutdown")) {
+			jimbot.user.setStatus('idle', 'Sorry, I still want you');
 			message.channel.sendMessage("\n\
 			`Goodbye my friends`\n\
 			\n\http://puu.sh/r2sDl/9162b5bbab.jpg ");
