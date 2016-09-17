@@ -315,6 +315,7 @@ function msToTime(s) {
 jimbot.on("ready", () => {
 		console.log(jimbot.user.username + " (ID:" + jimbot.user.id + ") ready on " + jimbot.guilds.size + " servers.");
     Cooldown.Setup(jimbot, CONFIG_COOLDOWN, jimbot.users);
+		jimbot.user.setStatus('online', 'Hey');
 });
 
 
