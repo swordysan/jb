@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const fs = require('fs');
 var jimbot = new Discord.Client({
 	fetch_all_members: true
 });
@@ -131,11 +132,11 @@ This message auto-deletes in 30 seconds. \n\
   	};
 
 	if(message.content.startsWith(prefix + "uptime")){
-		message.channel.sendMessage("Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty Jimmers. Current pool size 843 images in 40 albums.");
+		message.channel.sendMessage("Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty Jimmers. Current pool size 915 images in 44 albums.");
   };
 
 	if(message.content.startsWith(prefix + "status")) {
-		message.channel.sendMessage("Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty Jimmers. Current pool size 843 images in 40 albums.");
+		message.channel.sendMessage("Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty Jimmers. Current pool size 915 images in 44 albums.");
 	};
 
 	if(message.content.startsWith(prefix + "changelog")) {
@@ -150,6 +151,7 @@ This message auto-deletes in 30 seconds. \n\
 \n\
 **Image pool**\n\
 \n\
+`169822` - main from 843 to 915 all 2016 05-09\n\
 `160910` - main from 736 to 843 added some 2014/15 and newer stuff\n\
 `160907` - increased main pool from 682 to 736 images\n\
 `160906` - increased nr of !jiminsta from 28 to 99 images (videos will be added soon)");
@@ -277,8 +279,13 @@ This message auto-deletes in 30 seconds. \n\
 		// Can only do this twice a day due to discord CD! Use with care
 		if(message.content.startsWith(prefix + "setname")) {
 			let args = message.content.split(" ").slice(1);
-			let name = args.slice(0).join(" ");
+			let avatar = args.slice(0).join(" ");
 			jimbot.user.setUsername(`${name}`);
+		};
+
+		// Sets the bot's avatar
+		if(message.content.startsWith(prefix + "setavatar")) {
+			jimbot.user.setAvatar(fs.readFileSync('./lib/cat.jpg'));
 		};
 
 		// Shuts down the bot after 2 seconds
