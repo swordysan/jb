@@ -142,7 +142,8 @@ This message auto-deletes in 30 seconds. \n\
 	if(message.content.startsWith(prefix + "changelog")) {
 		message.channel.sendMessage("**Features**\n\
 \n\
-`160914 (latest)` - fixed several favourites bugs and crashes, added !listfav and !delfav\n\
+`161219 (latest)` - updated to discord.js v10 + !listfav is now numbered for easier management\n\
+`160914` - fixed several favourites bugs and crashes, added !listfav and !delfav\n\
 `160913` - added user favourites, check !commands for how to use \n\
 `160911` - new pool formatting so you won't get empty (date only) replies anymore\n\
 `160909` - updated code to discord.js version 9, broke cooldowns\n\
@@ -176,7 +177,7 @@ This message auto-deletes in 30 seconds. \n\
 			tempfavs.push(temp);
 			favdb.push("/" + message.author.id, tempfavs);
 		}
-		message.reply("Added this Jimin to your favourites. Use `!jimfav [number]` (starts at 0), or `!randfav` to check them out.").then(message => message.delete([10000]));
+		message.reply("Added this Jimin to your favourites. Use `!jimfav [number]` (starts at 0), `!randfav` or `!listfav` to check them out.").then(message => message.delete([10000]));
 	};
 
 	// Using a number e.g. !jimfav [5] you can specify the bot to return your favourite Jimin at that position.
@@ -222,7 +223,11 @@ This message auto-deletes in 30 seconds. \n\
 	if(message.content.startsWith(prefix + "listfav")) {
 		//return;
 			favs = favdb.getData("/" + message.author.id, favs);
-			message.author.sendCode('', favs, {
+			var templist = new Array();
+			for(i=0; i<favs.length; i++) {
+				templist.push(i + ' ' + favs[i]);
+			}
+			message.author.sendCode('js', templist, {
 				split: true
 			});
 		}
@@ -273,7 +278,7 @@ This message auto-deletes in 30 seconds. \n\
 		if(message.content.startsWith(prefix + "setstatus")) {
 			let args = message.content.split(" ").slice(1);
 			let status = args.slice(0).join(" ");
-			jimbot.user.setStatus('online', `${status}`);
+			jimbot.user.setPresence({'game' : {name: `${status}`}});
 		};
 
 		// Can only do this twice a day due to discord CD! Use with care
@@ -290,7 +295,8 @@ This message auto-deletes in 30 seconds. \n\
 
 		// Shuts down the bot after 2 seconds
 		if(message.content.startsWith(prefix + "shutdown")) {
-			jimbot.user.setStatus('idle', 'Sorry, I still want you');
+			jimbot.user.setStatus('dnd');
+			jimbot.user.setGame('Sorry, I still want you');
 			message.channel.sendMessage("\n\
 			`Goodbye my friends`\n\
 			\n\http://puu.sh/r2sDl/9162b5bbab.jpg ");
@@ -322,7 +328,7 @@ function msToTime(s) {
 jimbot.on("ready", () => {
 		console.log(jimbot.user.username + " (ID:" + jimbot.user.id + ") ready on " + jimbot.guilds.size + " servers.");
     Cooldown.Setup(jimbot, CONFIG_COOLDOWN, jimbot.users);
-		jimbot.user.setStatus('online', 'Hey');
+		jimbot.user.setPresence({'game' : {name: 'HEY'}});
 });
 
 
