@@ -152,6 +152,8 @@ This message auto-deletes in 30 seconds. \n\
 \n\
 **Image pool**\n\
 \n\
+We've hit 1000 jimbos!!!! \n\
+`161219` - added RUNAWAY JP photos and various events from 2016 09-12 (total 915 to 1006) \n\
 `169822` - main from 843 to 915 all 2016 05-09\n\
 `160910` - main from 736 to 843 added some 2014/15 and newer stuff\n\
 `160907` - increased main pool from 682 to 736 images\n\
