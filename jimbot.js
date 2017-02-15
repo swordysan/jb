@@ -96,7 +96,7 @@ jimbot.on("message", message => {
 	};
 
 	if(message.content.startsWith(prefix + "info")) {
-        message.channel.sendMessage("Made out of love for the prettiest girl in the world - in development. Remember to click the link for full res images. ");
+        message.reply("Made out of love for the prettiest girl in the world - in development. Remember to click the link for full res images. ");
 		};
 
 	if(message.content.startsWith(prefix + "commands")) {
@@ -115,6 +115,10 @@ jimbot.on("message", message => {
 `!roadmap` - Development roadmap.\n\
 `!changelog` - Update history.\n\
 \n\
+`!banhammer` - Ban Mina.\n\
+`!minashrug` - Shrug Mina.\n\
+`!minasad` - Sad Mina.\n\
+\n\
 This message auto-deletes in 30 seconds. \n\
 ").then(message => message.delete([30000]));
 		};
@@ -132,11 +136,11 @@ This message auto-deletes in 30 seconds. \n\
   	};
 
 	if(message.content.startsWith(prefix + "uptime")){
-		message.channel.sendMessage("Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty Jimmers. Current pool size 915 images in 44 albums.");
+		message.channel.sendMessage("Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty Jimmers. Current pool size 1006 images in 50 albums.");
   };
 
 	if(message.content.startsWith(prefix + "status")) {
-		message.channel.sendMessage("Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty Jimmers. Current pool size 915 images in 44 albums.");
+		message.channel.sendMessage("Online for **" + msToTime(jimbot.uptime) + "s** and delivered **" + jimmers + "** pretty Jimmers. Current pool size 1006 images in 50 albums.");
 	};
 
 	if(message.content.startsWith(prefix + "changelog")) {
@@ -268,6 +272,20 @@ We've hit 1000 jimbos!!!! \n\
 		console.log("Delete favourite " + favs[temp] + " for " + message.author.username);
 		message.reply("The selected Jimin was successfully deleted from your list.").then(message => message.delete([10000]));
 	}
+
+	// Extra commands (not Jimin related)
+	if(message.content.startsWith(prefix + "banhammer")) {
+        message.channel.sendMessage("http://i.imgur.com/OQ5n7gR.gif");
+		};
+
+	if(message.content.startsWith(prefix + "minashrug")) {
+				message.channel.sendMessage("http://i.imgur.com/jQbRn62.jpg");
+		};
+
+	if(message.content.startsWith(prefix + "minasad")) {
+				message.channel.sendMessage("http://i.imgur.com/maRkHoA.jpg");
+		};
+
 
 	// Testing Admin commands with ownerid
 	if(message.author.id === ownerid){
